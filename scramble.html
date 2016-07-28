@@ -10,8 +10,21 @@
     <h1>A Javascript Word Scramble Game</h1>
 
     <script>
+        function shuffledWord (word){
+            var shuffledWord = '';
+            var charIndex = 0;
+            word = word.split('');
+
+            while(word.length > 0){
+                charIndex = Math.floor(word.length * Math.random());
+                shuffledWord += word[charIndex];
+                word.splice(charIndex,1);
+                }
+                return shuffledWord;
+                }
+
         var WORDS     = ["booger", "apple", "hackbright", "mango"];
-        var SCRAMBLED = ["oogreb", "papel", "backrhight", "goman"];
+        // var SCRAMBLED = ["oogreb", "papel", "backrhight", "goman"];
 
         var playing = true;
 
@@ -20,19 +33,23 @@
             // Grab a random word from the WORDS array
             var ranIndex = Math.floor(Math.random() * WORDS.length);
             var ranWord = WORDS[ranIndex];
-
+            var ranScram = shuffledWord(ranWord)
             // Grab the corresponding scrambled word from the SCRAMBLED array
-            var ranScram = SCRAMBLED[WORDS.indexOf(ranWord)];
-
+            // var ranScram = SCRAMBLED[WORDS.indexOf(ranWord)];
+            var again = true;
             // prompt the user to guess the original word when given the scrambled word
+            while (again) {
             var userGuess = prompt("Guess the word", alert(ranScram));
+            userGuess = userGuess.toLowerCase().trim()
 
             // If the user guesses wrong, tell them they were wrong and the right word.
             if (userGuess === ranWord) {
                 alert("You guessed correctly!");
             } else {
                 alert("That is incorrect!");
+                again = confirm("Press OK if you want to guess again.")
             }
+        }
 
             // If the user guesses the correct word, congratulate them.
 
